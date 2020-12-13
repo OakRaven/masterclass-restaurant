@@ -20,11 +20,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <style>
-        .btn-info {
-            color: white;
-        }
-    </style>
+    @yield('css')
 </head>
 
 <body>
@@ -91,6 +87,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    @yield('scripts')
 </body>
 
 </html>

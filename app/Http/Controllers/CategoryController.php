@@ -97,7 +97,7 @@ class CategoryController extends Controller
         $foodCount = $category->food()->count();
 
         if ($foodCount > 0) {
-            session()->flash('error', "Category has {$foodCount} related food " .
+            session()->flash('error', "The {$category->name} category has {$foodCount} related food " .
                 Str::plural('item', $foodCount) .
                 ' and cannot be deleted');
             return redirect()->back();
