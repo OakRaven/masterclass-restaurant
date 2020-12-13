@@ -39,7 +39,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li class="nav-item">
+                            <a href="{{ route('category.index') }}" class="nav-link">Categories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('food.index') }}" class="nav-link">Food</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -79,8 +84,6 @@
         </nav>
 
         <main class="py-4">
-            @include('partials.flash')
-
             @yield('content')
         </main>
     </div>

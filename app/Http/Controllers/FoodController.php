@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Food;
+use App\Http\Requests\Food\CreateFoodRequest;
+use App\Http\Requests\Food\UpdateFoodRequest;
 use Illuminate\Http\Request;
 
 class FoodController extends Controller
@@ -14,7 +17,7 @@ class FoodController extends Controller
      */
     public function index()
     {
-        //
+        return view('food.index')->with('food', Food::orderby('name')->get());
     }
 
     /**
@@ -24,7 +27,7 @@ class FoodController extends Controller
      */
     public function create()
     {
-        //
+        return view('food.create')->with('categories', Category::orderby('name')->get());
     }
 
     /**
@@ -33,9 +36,9 @@ class FoodController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateFoodRequest $request)
     {
-        //
+        return redirect()->route('food.index');
     }
 
     /**
@@ -57,7 +60,9 @@ class FoodController extends Controller
      */
     public function edit(Food $food)
     {
-        //
+        return view('food.create')
+            ->with('food', $food)
+            ->with('categories', Category::orderby('name')->get());
     }
 
     /**
@@ -67,7 +72,7 @@ class FoodController extends Controller
      * @param  \App\Food  $food
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Food $food)
+    public function update(UpdateFoodRequest $request, Food $food)
     {
         //
     }

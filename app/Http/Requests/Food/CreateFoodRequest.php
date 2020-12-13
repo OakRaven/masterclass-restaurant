@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Food;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoryRequest extends FormRequest
+class CreateFoodRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,10 @@ class UpdateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => "required|min:3|max:50|unique:categories,name," . $this->category->id,
+            'name' => 'required|min:3|unique:food',
+            'description' => 'required',
+            'price' => 'required',
+            'category' => 'required',
         ];
     }
 }
