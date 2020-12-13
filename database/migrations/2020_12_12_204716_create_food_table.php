@@ -19,6 +19,7 @@ class CreateFoodTable extends Migration
             $table->text('description');
             $table->float('price');
             $table->unsignedBigInteger('category_id');
+            $table->string('image');
             $table->timestamps();
         });
     }

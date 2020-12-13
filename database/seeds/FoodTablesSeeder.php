@@ -22,18 +22,21 @@ class FoodTablesSeeder extends Seeder
             'name' => 'Coke',
             'description' => 'Cold can of Coke, 355 ml',
             'price' => 1.25,
+            'image' => 'sample.jpg',
         ]);
 
         $category_drinks->food()->create([
             'name' => 'Diet Coke',
             'description' => 'Cold can of Diet Coke, 355 ml',
             'price' => 1.25,
+            'image' => 'sample.jpg',
         ]);
 
         $category_drinks->food()->create([
             'name' => 'Smart Water',
             'description' => 'Cold bottle of mineral-free water, 640 ml',
             'price' => 3.50,
+            'image' => 'sample.jpg',
         ]);
     }
 }

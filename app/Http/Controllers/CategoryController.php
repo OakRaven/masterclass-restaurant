@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Http\Requests\CreateCategoryRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\Categories\CreateCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -41,7 +42,7 @@ class CategoryController extends Controller
             'name' => $request->name,
         ]);
 
-        session()->flash('success', 'Category successfully created');
+        session()->flash('success', 'Category created successfully');
 
         return redirect(route('category.index'));
     }
@@ -65,7 +66,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('category.create')->with('category', $category);
     }
 
     /**
@@ -75,9 +76,14 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $category->name = $request->name;
+        $category->save();
+
+        session()->flash('success', 'Category updated successfully');
+
+        return redirect(route('category.index'));
     }
 
     /**
@@ -88,6 +94,19 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $foodCount = $category->food()->count();
+
+        if ($foodCount > 0) {
+            session()->flash('error', "Category has {$foodCount} related food " .
+                Str::plural('item', $foodCount) .
+                ' and cannot be deleted');
+            return redirect()->back();
+        }
+
+        $category->delete();
+
+        session()->flash('success', 'Category deleted successfully');
+
+        return redirect(route("category.index"));
     }
 }
