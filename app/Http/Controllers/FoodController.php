@@ -38,6 +38,22 @@ class FoodController extends Controller
      */
     public function store(CreateFoodRequest $request)
     {
+        $image = $request->file('image');
+        $name = time() . '.' . $image->getClientOriginalExtension();
+
+        $destinationPath = public_path('/images');
+        $image->move($destinationPath, $name);
+
+        Food::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'category_id' => $request->category,
+            'image' => $name,
+        ]);
+
+        session()->flash('success', 'Food item has been added successfully');
+
         return redirect()->route('food.index');
     }
 
@@ -74,7 +90,8 @@ class FoodController extends Controller
      */
     public function update(UpdateFoodRequest $request, Food $food)
     {
-        //
+        return dd($request);
+
     }
 
     /**

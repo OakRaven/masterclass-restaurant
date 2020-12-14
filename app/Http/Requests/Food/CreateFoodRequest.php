@@ -26,8 +26,9 @@ class CreateFoodRequest extends FormRequest
         return [
             'name' => 'required|min:3|unique:food',
             'description' => 'required',
-            'price' => 'required',
+            'price' => 'required|between:0.01,999.00',
             'category' => 'required',
+            'image' => 'required|mimes:png,jpg,jpeg',
         ];
     }
 }

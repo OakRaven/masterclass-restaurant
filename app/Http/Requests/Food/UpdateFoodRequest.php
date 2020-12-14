@@ -26,7 +26,7 @@ class UpdateFoodRequest extends FormRequest
         return [
             'name' => 'required|min:3|unique:food,name,' . $this->food->id,
             'description' => 'required',
-            'price' => 'required',
+            'price' => 'required|numeric|between:0.05,999.00',
             'category' => 'required',
         ];
 

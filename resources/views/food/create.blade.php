@@ -13,7 +13,8 @@
                     @endif
                 </div>
                 <div class="card-body">
-                    <form action="{{ isset($food) ? route('food.update', $food) : route('food.store') }}" method="POST">
+                    <form action="{{ isset($food) ? route('food.update', $food) : route('food.store') }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @if (isset($food))
                         @method('PUT')
@@ -47,7 +48,7 @@
                         {{-- price --}}
                         <div class="form-group">
                             <label for="price">Price</label>
-                            <input type="number" name="price" id="price"
+                            <input type="number" step="any" name="price" id="price"
                                 class="form-control @error('price') is-invalid @enderror"
                                 value="{{ old('price', isset($food) ? $food->price : '') }}">
                             @error('price')
@@ -70,6 +71,18 @@
                                 @endforeach
                             </select>
                             @error('category')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        {{-- image --}}
+                        <div class="form-group">
+                            <label for="image">Image</label>
+                            <input type="file" name="image" id="image"
+                                class="form-control @error('price') is-invalid @enderror">
+                            @error('image')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
