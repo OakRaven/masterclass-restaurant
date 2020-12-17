@@ -7,6 +7,7 @@ use App\Food;
 use App\Http\Requests\Food\CreateFoodRequest;
 use App\Http\Requests\Food\UpdateFoodRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class FoodController extends Controller
 {
@@ -17,7 +18,7 @@ class FoodController extends Controller
      */
     public function index()
     {
-        return view('food.index')->with('food', Food::orderby('name')->get());
+        return view('food.index')->with('food', Food::orderby('name')->paginate(10));
     }
 
     /**
@@ -90,7 +91,30 @@ class FoodController extends Controller
      */
     public function update(UpdateFoodRequest $request, Food $food)
     {
-        return dd($request);
+
+        $image = $request->file('image');
+        if ($image) {
+            if (File::exists(public_path('/images/' . $food->image))) {
+                File::delete(public_path('/images/' . $food->image));
+            }
+
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $name);
+
+            $food->image = $name;
+        }
+
+        $food->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'category_id' => $request->category,
+        ]);
+
+        session()->flash('success', 'Food item has been updated successfully');
+
+        return redirect()->route('food.index');
 
     }
 

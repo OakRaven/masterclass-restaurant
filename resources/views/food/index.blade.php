@@ -17,24 +17,29 @@
                     <table class="table table-striped">
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">Image</th>
                                 <th scope="col">Name</th>
-                                <th scope="col" class="text-center">Category</th>
+                                <th scope="col" class="text-right">Price</th>
+                                <th scope="col">Category</th>
                                 <th scope="col" class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if (count($food) > 0)
 
-                            @foreach ($food as $key=>$item)
+                            @foreach ($food as $item)
                             <tr>
                                 <td scope="row">
-                                    {{ $key + 1 }}
+                                    <img src="{{ asset("images/{$item->image}") }}" width="100" alt=""
+                                        class="thumbnail">
                                 </td>
                                 <td>
                                     {{ $item->name }}
                                 </td>
-                                <td class="text-center">
+                                <td class="text-right">
+                                    $ {{ number_format($item->price, 2, '.', ',') }}
+                                </td>
+                                <td>
                                     {{ $item->category->name }}
                                 </td>
                                 <td class="text-center">
@@ -96,6 +101,8 @@
 
                         </tbody>
                     </table>
+
+                    {{ $food->links() }}
 
                 </div>
             </div>
